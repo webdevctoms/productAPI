@@ -8,7 +8,6 @@ const jsonParser = bodyParser.json();
 
 const app = express();
 app.use(jsonParser);
-app.use('/api/products',productRouter);
 
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -19,6 +18,8 @@ app.use(function (req, res, next) {
     }
     next();
   });
+
+app.use('/api/products',productRouter);
 
 let server;
 
