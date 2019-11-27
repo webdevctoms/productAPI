@@ -1,9 +1,11 @@
 require('dotenv').config();
 const express = require('express');
 const {PORT, DATABASE_URL} = require('./config');
+const {router:productRouter} = require('./routers/productRouter');
 const mongoose = require('mongoose');
 
 const app = express();
+app.use('/api/products',productRouter);
 
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -19,7 +21,7 @@ let server;
 
 function runServer( databaseUrl, port = PORT) {
   return new Promise((resolve, reject) => {
-    mongoose.connect(databaseUrl,{ useNewUrlParser: true },err => {
+    mongoose.connect(databaseUrl,{ useNewUrlParser: true ,useUnifiedTopology: true },err => {
       if (err) {
         return reject(err);
       }
