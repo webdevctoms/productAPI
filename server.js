@@ -3,8 +3,11 @@ const express = require('express');
 const {PORT, DATABASE_URL} = require('./config');
 const {router:productRouter} = require('./routers/productRouter');
 const mongoose = require('mongoose');
+const bodyParser = require("body-parser");
+const jsonParser = bodyParser.json();
 
 const app = express();
+app.use(jsonParser);
 app.use('/api/products',productRouter);
 
 app.use(function (req, res, next) {
@@ -38,15 +41,17 @@ function runServer( databaseUrl, port = PORT) {
 }
 
 function closeServer(){
-	return new Promise((resolve,reject) => {
-		console.log("closing server");
-		server.close(err => {
-			if(err){
-				return reject(err);
-			}
-			resolve();
-		});
-	});
+    return mongoose.disconnect().then(() => {
+        return new Promise((resolve,reject) => {
+            console.log("closing server");
+            server.close(err => {
+                if(err){
+                    return reject(err);
+                }
+                resolve();
+            });
+        });
+    });
 }
 
 if (require.main === module){
