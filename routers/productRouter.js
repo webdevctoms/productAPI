@@ -9,9 +9,10 @@ router.get('/',checkKey,(req,res)=>{
     return Products.find({})
 
     .then(products => {
+        let productData = products.map(product => product.serialize());
         return res.json({
             status:200,
-            products
+            products:productData
         });
     })
 
