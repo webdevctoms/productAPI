@@ -5,9 +5,22 @@ const {checkPost} = require('../tools/checkPost');
 const {Products} = require('../models/productModel');
 
 router.get('/',checkKey,(req,res)=>{
-    return res.json({
-        status:200,
-        message:'good'
+
+    return Products.find({})
+
+    .then(products => {
+        return res.json({
+            status:200,
+            products
+        });
+    })
+
+    .catch(err => {
+        console.log(err);
+        return res.json({
+            status:500,
+            message:'Internal server error'
+        });
     });
 });
 
