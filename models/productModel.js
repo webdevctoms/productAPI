@@ -3,12 +3,13 @@ const mongoose = require('mongoose');
 const variantSchema = mongoose.Schema({
     item_code:{type:String, required:true},
     variant_price:{type:String,required:true},
-    variant_options:{type:Array,required:true}
+    variant_option:{type:String, required:true}
 },{_id:false});
 
 const productSchema = mongoose.Schema({
-    title:{type:String, required:true},
+    title:{type:String, required:true,unique:true},
     img_url:{type:String,required:true},
+    variant_options:{type:Array,required:true},
     variants:[variantSchema]
 },{minimize:false});
 

@@ -12,12 +12,25 @@ router.get('/',checkKey,(req,res)=>{
 });
 
 router.post('/',checkPost,(req,res)=>{
-    
+    const productData = req.body;
+    console.log(productData);
 
-    return res.json({
-        status:200,
-        message:'good'
-    });
+    return Products.create(productData)
+
+    .then(data => {
+        return res.json({
+            status:200,
+            message:'Saved Data'
+        });
+    })
+
+    .catch(err => {
+        console.log(err);
+        return res.json({
+            status:500,
+            message:'Internal server error'
+        });
+    });    
 });
 
 
