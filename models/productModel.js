@@ -17,6 +17,7 @@ productSchema.methods.serialize = function(){
     return{
         title:this.title,
         img_url:this.img_url,
+        variant_options:this.variant_options,
         variants: this.variants
     }
 };
